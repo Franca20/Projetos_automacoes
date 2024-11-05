@@ -1,6 +1,7 @@
 import logging
 from telegram import Update
 from telegram.ext import filters, MessageHandler, ApplicationBuilder, CommandHandler, ContextTypes
+import os
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -15,7 +16,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.effective_chat.id, text='resposta do meu gpt aqui')
 
 if __name__ == '__main__':
-    application = ApplicationBuilder().token('7772018733:AAGcs30aaUXRG072p34_kSvO1TDAbEIoyrw').build()
+    application = ApplicationBuilder().token(os.getenv('token_telegram')).build()
     
     start_handler = CommandHandler('start', start)
     echo_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), echo)
